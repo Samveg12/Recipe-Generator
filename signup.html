@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CulinaryMuse</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: url('img/food-pattern.svg') center/cover no-repeat fixed;
+            position: relative;
+            color: var(--text-white);
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 0;
+        }
+        
+        .signup-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .signup-form {
+            background: rgba(34, 40, 49, 0.9);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(10px);
+            max-width: 650px;
+            padding: var(--spacing-xl);
+            width: 100%;
+            border: 1px solid var(--border-color-light);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .app-logo {
+            margin: 0 auto var(--spacing-md);
+            width: 90px;
+            height: 90px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(255, 159, 28, 0.3));
+        }
+        
+        .signup-form h1 {
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-xs);
+            text-align: center;
+            font-family: var(--font-family-heading);
+            font-weight: 700;
+            font-size: 2.2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .signup-form h2 {
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+            color: var(--text-white);
+        }
+        
+        .form-group label {
+            color: var(--text-white);
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            background-color: rgba(57, 62, 70, 0.7);
+            color: var(--text-white);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.25);
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .interests-section {
+            margin-bottom: var(--spacing-lg);
+            background-color: rgba(45, 64, 89, 0.3);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+        }
+        
+        .interests-section h3 {
+            color: var(--text-white);
+            margin-bottom: var(--spacing-sm);
+            font-size: 18px;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tag {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background-color: rgba(57, 62, 70, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-white);
+            font-size: 14px;
+        }
+        
+        .tag.active {
+            background-color: var(--secondary-color);
+            color: var(--text-white);
+            border-color: var(--secondary-color);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .tag:hover {
+            background-color: rgba(255, 159, 28, 0.3);
+            color: var(--text-white);
+            transform: translateY(-2px);
+        }
+        
+        .signup-form .btn-primary {
+            width: 100%;
+            margin-top: var(--spacing-md);
+            padding: 14px;
+            background: var(--gradient-secondary);
+            transition: all var(--transition-fast);
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: var(--border-radius-md);
+            color: var(--text-white);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .signup-form .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .signup-form .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .social-signup {
+            margin-top: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .social-signup p {
+            color: var(--text-white);
+            margin-bottom: var(--spacing-md);
+            position: relative;
+            font-size: 14px;
+        }
+        
+        .social-signup p::before,
+        .social-signup p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+        
+        .social-signup p::before {
+            left: 0;
+        }
+        
+        .social-signup p::after {
+            right: 0;
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            font-size: var(--font-size-lg);
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .social-btn.facebook {
+            background-color: #4267B2;
+        }
+        
+        .social-btn.google {
+            background-color: #DB4437;
+        }
+        
+        .social-btn.apple {
+            background-color: #000000;
+        }
+        
+        .login-link {
+            margin-top: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .login-link p {
+            color: var(--text-white);
+            font-size: 14px;
+        }
+        
+        .login-link a {
+            color: var(--secondary-color);
+            transition: color var(--transition-fast);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .login-link a:hover {
+            color: var(--secondary-light);
+            text-decoration: underline;
+        }
+        
+        /* Multi-step form styles */
+        .form-step {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            display: none; /* Hide all steps by default */
+        }
+        
+        /* Make the first step visible by default */
+        #step1 {
+            display: block;
+            background-color: rgba(34, 40, 49, 0.95);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+        }
+        
+        .form-step h3 {
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .step-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-lg);
+        }
+        
+        .btn-secondary {
+            padding: 14px;
+            background: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            font-weight: 600;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 159, 28, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary i, .btn-primary i {
+            font-size: 14px;
+        }
+        
+        .form-progress {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .progress-step {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            margin: 0 8px;
+            position: relative;
+        }
+        
+        .progress-step.active {
+            background-color: var(--secondary-color);
+            transform: scale(1.2);
+        }
+        
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 14px;
+            width: 16px;
+            height: 2px;
+            background-color: var(--border-color);
+        }
+        
+        .progress-step:last-child::after {
+            display: none;
+        }
+        
+        .progress-step.active::after {
+            background-color: var(--secondary-color);
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            background-color: rgba(57, 62, 70, 0.7);
+            color: var(--text-white);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 12px) center;
+            padding-right: 35px;
+        }
+        
+        select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.25);
+            outline: none;
+        }
+        
+        /* Ensure form fields are clearly visible */
+        .form-group input, .form-group select {
+            background-color: rgba(57, 62, 70, 0.9);
+            border: 1px solid var(--border-color);
+            color: var(--text-white);
+            font-size: 16px;
+        }
+        
+        /* Pin input field focus style */
+        .pin-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.25);
+            outline: none;
+            transform: scale(1.05);
+        }
+        
+        /* Loading animation */
+        .loading-dots {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 4px;
+        }
+        
+        .loading-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: white;
+            display: inline-block;
+            animation: dot-pulse 1.5s infinite ease-in-out;
+        }
+        
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes dot-pulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+        
+        /* Verification overlay animations */
+        .verification-appear {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Success button animation */
+        .success-button {
+            background-color: #4CAF50 !important;
+            animation: success-pulse 1.5s infinite;
+        }
+        
+        @keyframes success-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .signup-form {
+                max-width: 90%;
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-container">
+            <div class="signup-form">
+                <img src="img/logo-dark.svg" alt="CulinaryMuse Logo" class="app-logo">
+                <h1>CulinaryMuse</h1>
+                <h2>Join Our Culinary Community</h2>
+                
+                <!-- Progress indicator -->
+                <div class="form-progress">
+                    <div class="progress-step active" data-step="1"></div>
+                    <div class="progress-step" data-step="2"></div>
+                    <div class="progress-step" data-step="3"></div>
+                    <div class="progress-step" data-step="4"></div>
+                </div>
+                
+                <!-- Simplified Form (visible by default) -->
+                <form id="simpleSignupForm" style="display: block;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: var(--spacing-md);">Create Your Account</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="simpleFirstName">First Name</label>
+                            <input type="text" id="simpleFirstName" name="firstName" required placeholder="Enter your first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="simpleLastName">Last Name</label>
+                            <input type="text" id="simpleLastName" name="lastName" required placeholder="Enter your last name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="simpleEmail">Email</label>
+                        <input type="email" id="simpleEmail" name="email" required placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="simplePassword">Password</label>
+                            <input type="password" id="simplePassword" name="password" required placeholder="Create a password">
+                        </div>
+                        <div class="form-group">
+                            <label for="simpleConfirmPassword">Confirm Password</label>
+                            <input type="password" id="simpleConfirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="simpleAge">Age</label>
+                        <input type="number" id="simpleAge" name="age" min="13" max="120" required placeholder="Your age">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="simpleSex">Sex</label>
+                        <select id="simpleSex" name="sex" required>
+                            <option value="" disabled selected>Select your sex</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="non-binary">Non-binary</option>
+                            <option value="prefer-not-to-say">Prefer not to say</option>
+                        </select>
+                    </div>
+                    
+                    <div class="interests-section">
+                        <h3>Dietary Requirements</h3>
+                        <p style="color: var(--text-white); margin-bottom: var(--spacing-sm); font-size: 14px;">Select all that apply</p>
+                        <div class="tags-container">
+                            <span class="tag" data-value="vegetarian">Vegetarian</span>
+                            <span class="tag" data-value="vegan">Vegan</span>
+                            <span class="tag" data-value="pescatarian">Pescatarian</span>
+                            <span class="tag" data-value="gluten-free">Gluten-Free</span>
+                            <span class="tag" data-value="dairy-free">Dairy-Free</span>
+                            <span class="tag" data-value="keto">Keto</span>
+                            <span class="tag" data-value="paleo">Paleo</span>
+                        </div>
+                    </div>
+                    
+                    <div class="interests-section">
+                        <h3>Favorite Cuisines</h3>
+                        <p style="color: var(--text-white); margin-bottom: var(--spacing-sm); font-size: 14px;">Select your favorite cuisines</p>
+                        <div class="tags-container">
+                            <span class="tag" data-value="italian">Italian</span>
+                            <span class="tag" data-value="indian">Indian</span>
+                            <span class="tag" data-value="chinese">Chinese</span>
+                            <span class="tag" data-value="mexican">Mexican</span>
+                            <span class="tag" data-value="thai">Thai</span>
+                            <span class="tag" data-value="mediterranean">Mediterranean</span>
+                            <span class="tag" data-value="japanese">Japanese</span>
+                            <span class="tag" data-value="french">French</span>
+                        </div>
+                    </div>
+                    
+                    <div class="interests-section">
+                        <h3>What are your culinary interests?</h3>
+                        <p style="color: var(--text-white); margin-bottom: var(--spacing-sm); font-size: 14px;">Select all that apply</p>
+                        <div class="tags-container">
+                            <span class="tag" data-value="cooking">Cooking</span>
+                            <span class="tag" data-value="baking">Baking</span>
+                            <span class="tag" data-value="healthy">Healthy Eating</span>
+                            <span class="tag" data-value="desserts">Desserts</span>
+                            <span class="tag" data-value="quick">Quick Meals</span>
+                            <span class="tag" data-value="meal-prep">Meal Prep</span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="simpleSubmitBtn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                    
+                    <div style="text-align: center; margin-top: 20px; font-size: 14px; color: var(--text-light);">
+                        <a href="#" id="useAdvancedForm" style="color: var(--secondary-color); text-decoration: none;">
+                            Use advanced step-by-step form instead
+                        </a>
+                    </div>
+                </form>
+                
+                <!-- Email verification overlay -->
+                <div id="verificationOverlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(34, 40, 49, 0.98); z-index: 10; border-radius: var(--border-radius-lg); backdrop-filter: blur(5px);" class="verification-appear">
+                    <div style="padding: var(--spacing-xl); text-align: center;">
+                        <h3 style="color: var(--secondary-color); margin-bottom: var(--spacing-md); font-size: 1.5rem;">Verify Your Email</h3>
+                        <p style="color: var(--text-white); margin-bottom: var(--spacing-lg);">
+                            We've sent a verification code to your email address. Please enter the 4-digit code below to complete your registration.
+                        </p>
+                        
+                        <div style="margin: 0 auto; max-width: 300px;">
+                            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: var(--spacing-lg);">
+                                <input type="text" id="pin1" maxlength="1" class="pin-input" style="width: 50px; height: 60px; font-size: 24px; text-align: center; background-color: rgba(57, 62, 70, 0.9); color: var(--text-white); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); transition: all 0.3s ease;" autocomplete="off">
+                                <input type="text" id="pin2" maxlength="1" class="pin-input" style="width: 50px; height: 60px; font-size: 24px; text-align: center; background-color: rgba(57, 62, 70, 0.9); color: var(--text-white); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); transition: all 0.3s ease;" autocomplete="off">
+                                <input type="text" id="pin3" maxlength="1" class="pin-input" style="width: 50px; height: 60px; font-size: 24px; text-align: center; background-color: rgba(57, 62, 70, 0.9); color: var(--text-white); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); transition: all 0.3s ease;" autocomplete="off">
+                                <input type="text" id="pin4" maxlength="1" class="pin-input" style="width: 50px; height: 60px; font-size: 24px; text-align: center; background-color: rgba(57, 62, 70, 0.9); color: var(--text-white); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); transition: all 0.3s ease;" autocomplete="off">
+                            </div>
+                            
+                            <button id="verifyPinBtn" class="btn-primary" style="width: 100%;">
+                                <i class="fas fa-check-circle"></i> Verify Code
+                            </button>
+                            
+                            <div id="verificationStatus" style="margin-top: var(--spacing-md); color: var(--text-white); display: none;">
+                                Verifying
+                                <div class="loading-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            
+                            <p style="margin-top: var(--spacing-md); font-size: 14px; color: var(--text-light);">
+                                Didn't receive a code? <a href="#" id="resendCode" style="color: var(--secondary-color); text-decoration: none;">Resend Code</a>
+                            </p>
+                            
+                            <div id="pinError" style="color: #ff5252; margin-top: var(--spacing-sm); display: none;">
+                                Incorrect verification code. Please try again.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Original multi-step form (hidden for now) -->
+                <form id="signupForm" style="display: none;">
+                    <!-- Step 1: Account Info -->
+                    <div class="form-step" id="step1">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number (Optional)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" required placeholder="Create a password">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-primary next-step" data-next="step2">
+                            <i class="fas fa-arrow-right"></i> Continue
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Personal Info -->
+                    <div class="form-step" id="step2" style="display: none;">
+                        <h3>Tell us about yourself</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" name="age" min="13" max="120" required placeholder="Your age">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sex">Sex</label>
+                                <select id="sex" name="sex" required>
+                                    <option value="" disabled selected>Select your sex</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="non-binary">Non-binary</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="height">Height (cm, optional)</label>
+                                <input type="number" id="height" name="height" min="50" max="250" placeholder="Your height in centimeters">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="weight">Weight (kg, optional)</label>
+                                <input type="number" id="weight" name="weight" min="30" max="300" placeholder="Your weight in kilograms">
+                            </div>
+                        </div>
+                        
+                        <div class="step-buttons">
+                            <button type="button" class="btn-secondary prev-step" data-prev="step1">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" class="btn-primary next-step" data-next="step3">
+                                <i class="fas fa-arrow-right"></i> Continue
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Dietary Requirements -->
+                    <div class="form-step" id="step3" style="display: none;">
+                        <h3>Dietary Requirements</h3>
+                        <p style="color: var(--text-white); margin-bottom: var(--spacing-sm); font-size: 14px;">Select all that apply to you</p>
+                        
+                        <div class="tags-container">
+                            <span class="tag" data-value="vegetarian">Vegetarian</span>
+                            <span class="tag" data-value="vegan">Vegan</span>
+                            <span class="tag" data-value="pescatarian">Pescatarian</span>
+                            <span class="tag" data-value="gluten-free">Gluten-Free</span>
+                            <span class="tag" data-value="dairy-free">Dairy-Free</span>
+                            <span class="tag" data-value="keto">Keto</span>
+                            <span class="tag" data-value="paleo">Paleo</span>
+                            <span class="tag" data-value="low-carb">Low Carb</span>
+                            <span class="tag" data-value="diabetic">Diabetic-Friendly</span>
+                            <span class="tag" data-value="low-sodium">Low Sodium</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="allergies">Food Allergies (Optional)</label>
+                            <input type="text" id="allergies" name="allergies" placeholder="E.g. nuts, shellfish, eggs">
+                        </div>
+                        
+                        <div class="step-buttons">
+                            <button type="button" class="btn-secondary prev-step" data-prev="step2">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" class="btn-primary next-step" data-next="step4">
+                                <i class="fas fa-arrow-right"></i> Continue
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Culinary Preferences -->
+                    <div class="form-step" id="step4" style="display: none;">
+                        <h3>Favorite Cuisines</h3>
+                        <p style="color: var(--text-white); margin-bottom: var(--spacing-sm); font-size: 14px;">Select your favorite cuisines</p>
+                        
+                        <div class="tags-container">
+                            <span class="tag" data-value="italian">Italian</span>
+                            <span class="tag" data-value="french">French</span>
+                            <span class="tag" data-value="indian">Indian</span>
+                            <span class="tag" data-value="chinese">Chinese</span>
+                            <span class="tag" data-value="japanese">Japanese</span>
+                            <span class="tag" data-value="mexican">Mexican</span>
+                            <span class="tag" data-value="thai">Thai</span>
+                            <span class="tag" data-value="mediterranean">Mediterranean</span>
+                            <span class="tag" data-value="middle-eastern">Middle Eastern</span>
+                            <span class="tag" data-value="korean">Korean</span>
+                            <span class="tag" data-value="spanish">Spanish</span>
+                            <span class="tag" data-value="american">American</span>
+                        </div>
+                        
+                        <div class="interests-section">
+                            <h3>What are your culinary interests?</h3>
+                            <p style="color: var(--text-white); margin-bottom: var(--spacing-sm); font-size: 14px;">Select all that apply</p>
+                            <div class="tags-container">
+                                <span class="tag" data-value="cooking">Cooking</span>
+                                <span class="tag" data-value="baking">Baking</span>
+                                <span class="tag" data-value="healthy">Healthy Eating</span>
+                                <span class="tag" data-value="desserts">Desserts</span>
+                                <span class="tag" data-value="international">International Cuisine</span>
+                                <span class="tag" data-value="quick">Quick Meals</span>
+                                <span class="tag" data-value="meal-prep">Meal Prep</span>
+                                <span class="tag" data-value="bbq">BBQ & Grilling</span>
+                            </div>
+                        </div>
+                        
+                        <div class="step-buttons">
+                            <button type="button" class="btn-secondary prev-step" data-prev="step3">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-user-plus"></i> Create Account
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="social-signup">
+                    <p>Or sign up with</p>
+                    <div class="social-buttons">
+                        <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-btn apple"><i class="fab fa-apple"></i></a>
+                    </div>
+                </div>
+                
+                <div class="login-link">
+                    <p>Already have an account? <a href="index.html">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM fully loaded - initializing form");
+            
+            // Initialize simplified form
+            const simpleForm = document.getElementById('simpleSignupForm');
+            console.log("Simple form found:", !!simpleForm);
+            
+            if (simpleForm) {
+                simpleForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log("Simple form submitted");
+                    
+                    // Collect all form data
+                    const formData = new FormData(this);
+                    
+                    // Get selected tags
+                    const selectedTags = {};
+                    this.querySelectorAll('.tags-container').forEach(container => {
+                        const category = container.previousElementSibling?.innerText || 'interests';
+                        selectedTags[category] = [];
+                        
+                        container.querySelectorAll('.tag.active').forEach(tag => {
+                            selectedTags[category].push(tag.getAttribute('data-value'));
+                        });
+                    });
+                    
+                    // Add tags to form data
+                    formData.append('preferences', JSON.stringify(selectedTags));
+                    
+                    // Here you would typically send the data to your server
+                    console.log('Simple form submitted!');
+                    console.log('Form data:', Object.fromEntries(formData));
+                    
+                    // Show verification overlay instead of redirecting immediately
+                    document.getElementById('verificationOverlay').style.display = 'block';
+                    document.getElementById('pin1').focus();
+                });
+            }
+            
+            // Email verification functionality
+            const pinInputs = document.querySelectorAll('.pin-input');
+            const verifyButton = document.getElementById('verifyPinBtn');
+            const resendButton = document.getElementById('resendCode');
+            const pinError = document.getElementById('pinError');
+            
+            // Auto-move to next input when a digit is entered
+            pinInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1) {
+                        const nextInput = pinInputs[index + 1];
+                        if (nextInput) {
+                            nextInput.focus();
+                        }
+                    }
+                });
+                
+                // Allow backspace to go to previous input
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value.length === 0) {
+                        const prevInput = pinInputs[index - 1];
+                        if (prevInput) {
+                            prevInput.focus();
+                        }
+                    }
+                });
+            });
+            
+            // Verify button functionality
+            verifyButton.addEventListener('click', function() {
+                const pin = Array.from(pinInputs).map(input => input.value).join('');
+                console.log("Verifying PIN:", pin);
+                
+                // Disable inputs and button during verification
+                pinInputs.forEach(input => input.disabled = true);
+                verifyButton.disabled = true;
+                
+                // Show loading animation
+                verifyButton.style.display = 'none';
+                document.getElementById('verificationStatus').style.display = 'block';
+                
+                // Simulate server verification delay
+                setTimeout(() => {
+                    // Check if PIN matches the expected value (1230)
+                    if (pin === '1230') {
+                        console.log("PIN verified successfully");
+                        pinError.style.display = 'none';
+                        
+                        // Update verification status
+                        document.getElementById('verificationStatus').innerHTML = 
+                            '<span style="color: #4CAF50;"><i class="fas fa-check-circle"></i> Verified successfully!</span>';
+                        
+                        // Show a success message
+                        setTimeout(() => {
+                            document.getElementById('verificationStatus').innerHTML = 
+                                '<span style="color: #4CAF50;"><i class="fas fa-check-circle"></i> Redirecting to chat...</span>';
+                            
+                            // Redirect to chat page after a short delay
+                            setTimeout(() => {
+                                window.location.href = 'chat.html';
+                            }, 1000);
+                        }, 1000);
+                    } else {
+                        console.log("Incorrect PIN");
+                        
+                        // Hide loading, show error, and reset for retry
+                        document.getElementById('verificationStatus').style.display = 'none';
+                        verifyButton.style.display = 'block';
+                        verifyButton.disabled = false;
+                        
+                        pinError.style.display = 'block';
+                        pinInputs.forEach(input => {
+                            input.value = '';
+                            input.disabled = false;
+                        });
+                        pinInputs[0].focus();
+                    }
+                }, 1500); // Simulate 1.5 second verification process
+            });
+            
+            // Enter key on last input triggers verification
+            pinInputs[3].addEventListener('keyup', function(e) {
+                if (e.key === 'Enter' && this.value.length === 1) {
+                    verifyButton.click();
+                }
+            });
+            
+            // Resend code functionality
+            resendButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log("Resend code clicked");
+                
+                // Show temporary message
+                this.textContent = 'Code resent!';
+                setTimeout(() => {
+                    this.textContent = 'Resend Code';
+                }, 3000);
+            });
+            
+            // Also add verification to the multi-step form
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log("Multi-step form submitted");
+                
+                // Show verification overlay
+                document.getElementById('verificationOverlay').style.display = 'block';
+                document.getElementById('pin1').focus();
+            });
+            
+            // Check if form elements exist
+            const form = document.getElementById('signupForm');
+            const step1 = document.getElementById('step1');
+            console.log("Form found:", !!form);
+            console.log("Step 1 found:", !!step1);
+            
+            const tags = document.querySelectorAll('.tag');
+            console.log("Number of tags found:", tags.length);
+            
+            tags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    console.log("Tag clicked:", this.getAttribute('data-value'));
+                });
+            });
+
+            // Form navigation
+            const nextButtons = document.querySelectorAll('.next-step');
+            const prevButtons = document.querySelectorAll('.prev-step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            
+            console.log("Next buttons found:", nextButtons.length);
+            console.log("Prev buttons found:", prevButtons.length);
+            console.log("Progress steps found:", progressSteps.length);
+            
+            function updateProgressBar(stepNumber) {
+                console.log("Updating progress bar to step:", stepNumber);
+                progressSteps.forEach(step => {
+                    if (parseInt(step.getAttribute('data-step')) <= stepNumber) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+            }
+            
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = this.closest('.form-step');
+                    const nextStepId = this.getAttribute('data-next');
+                    const nextStepNumber = nextStepId.replace('step', '');
+                    
+                    console.log("Moving to next step:", nextStepId);
+                    
+                    // Optional: Add validation here before proceeding
+                    
+                    currentStep.style.display = 'none';
+                    document.getElementById(nextStepId).style.display = 'block';
+                    
+                    // Update progress bar
+                    updateProgressBar(nextStepNumber);
+                    
+                    // Scroll to top of form
+                    document.querySelector('.signup-form').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentStep = this.closest('.form-step');
+                    const prevStepId = this.getAttribute('data-prev');
+                    const prevStepNumber = prevStepId.replace('step', '');
+                    
+                    console.log("Moving to previous step:", prevStepId);
+                    
+                    currentStep.style.display = 'none';
+                    document.getElementById(prevStepId).style.display = 'block';
+                    
+                    // Update progress bar
+                    updateProgressBar(prevStepNumber);
+                    
+                    // Scroll to top of form
+                    document.querySelector('.signup-form').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Form submission
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log("Form submitted");
+                
+                // Collect all form data
+                const formData = new FormData(this);
+                
+                // Get selected tags
+                const selectedTags = {};
+                document.querySelectorAll('.tags-container').forEach(container => {
+                    const category = container.previousElementSibling?.innerText || 'interests';
+                    selectedTags[category] = [];
+                    
+                    container.querySelectorAll('.tag.active').forEach(tag => {
+                        selectedTags[category].push(tag.getAttribute('data-value'));
+                    });
+                });
+                
+                // Add tags to form data
+                formData.append('preferences', JSON.stringify(selectedTags));
+                
+                // Here you would typically send the data to your server
+                console.log('Form submitted!');
+                console.log('Form data:', Object.fromEntries(formData));
+                
+                // Redirect to profile page or confirmation page
+                // window.location.href = 'profile.html';
+                alert('Account created successfully! Redirecting to your profile...');
+            });
+
+            // Multi-step form toggle function
+            document.getElementById('useAdvancedForm').addEventListener('click', function(e) {
+                e.preventDefault();
+                simpleForm.style.display = 'none';
+                form.style.display = 'block';
+                updateProgressBar(1);
+            });
+
+            // Initialize the form
+            console.log("Form initialization complete");
+        });
+    </script>
+</body>
+</html> 

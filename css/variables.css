@@ -1,0 +1,99 @@
+:root {
+    /* Colors - Dark Theme */
+    --primary-color: #2D4059;
+    --primary-light: #3D5A80;
+    --primary-dark: #222831;
+    --secondary-color: #FF9F1C;
+    --secondary-light: #FFBF69;
+    --secondary-dark: #E76F51;
+    --accent-color: #00ADB5;
+    --accent-light: #2EC4B6;
+    --accent-dark: #007580;
+    
+    /* Enhanced Colors */
+    --tertiary-color: #F95738;
+    --tertiary-light: #FC8A5E;
+    --tertiary-dark: #C4412F;
+    
+    --text-primary: #F2F2F2;
+    --text-secondary: #CCCCCC;
+    --text-light: #A0A0A0;
+    --text-white: #FFFFFF;
+    
+    --bg-light: #393E46;
+    --bg-white: #222831;
+    --bg-dark: #121212;
+    --bg-gray: #2C3440;
+    
+    --border-color: #454545;
+    --border-color-light: #555555;
+    --border-color-dark: #333333;
+    
+    --success-color: #00B894;
+    --warning-color: #FDCB6E;
+    --danger-color: #E17055;
+    --info-color: #0984E3;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    --gradient-secondary: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+    --gradient-tertiary: linear-gradient(135deg, var(--tertiary-color), var(--tertiary-dark));
+    --gradient-light: linear-gradient(135deg, #393E46, #222831);
+    --gradient-dark: linear-gradient(135deg, #121212, #000000);
+    
+    /* Typography */
+    --font-family-base: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family-heading: 'Montserrat', sans-serif;
+    --font-family-accent: 'Playfair Display', serif;
+    
+    --font-size-xs: 0.75rem;     /* 12px */
+    --font-size-sm: 0.875rem;    /* 14px */
+    --font-size-base: 1rem;      /* 16px */
+    --font-size-md: 1.125rem;    /* 18px */
+    --font-size-lg: 1.25rem;     /* 20px */
+    --font-size-xl: 1.5rem;      /* 24px */
+    --font-size-xxl: 2rem;       /* 32px */
+    --font-size-xxxl: 2.5rem;    /* 40px */
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;       /* 4px */
+    --spacing-sm: 0.5rem;        /* 8px */
+    --spacing-md: 1rem;          /* 16px */
+    --spacing-lg: 1.5rem;        /* 24px */
+    --spacing-xl: 2rem;          /* 32px */
+    --spacing-xxl: 3rem;         /* 48px */
+    
+    /* Border radius */
+    --border-radius-sm: 0.25rem; /* 4px */
+    --border-radius-md: 0.5rem;  /* 8px */
+    --border-radius-lg: 1rem;    /* 16px */
+    --border-radius-full: 9999px;
+    
+    /* Shadow */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 15px rgba(255, 159, 28, 0.5);
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Z-indices */
+    --z-below: -1;
+    --z-normal: 1;
+    --z-above: 10;
+    --z-overlay: 100;
+    --z-modal: 1000;
+    --z-tooltip: 1500;
+    
+    /* Logo sizes */
+    --logo-size-sm: 30px;
+    --logo-size-md: 40px;
+    --logo-size-lg: 80px;
+    --logo-size-xl: 100px;
+} 
