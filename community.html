@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CulinaryMuse - Community Recipes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .app-container {
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+        
+        .main-content-full {
+            padding: var(--spacing-lg);
+        }
+        
+        .community-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .community-title h1 {
+            font-size: var(--font-size-xxl);
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+            font-family: var(--font-family-heading);
+        }
+        
+        .community-title p {
+            color: var(--text-secondary);
+            font-size: var(--font-size-md);
+        }
+        
+        .community-filter-bar {
+            background-color: var(--bg-light);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .filter-tabs {
+            display: flex;
+            overflow-x: auto;
+            margin-bottom: var(--spacing-md);
+            gap: var(--spacing-sm);
+            padding-bottom: var(--spacing-xs);
+        }
+        
+        .filter-tab {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: var(--border-radius-full);
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+        }
+        
+        .filter-tab:hover {
+            background-color: rgba(255, 159, 28, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .filter-tab.active {
+            background: var(--gradient-secondary);
+            color: var(--text-white);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .search-wrapper {
+            position: relative;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            padding-left: calc(var(--spacing-md) * 2);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-full);
+            background-color: rgba(57, 62, 70, 0.5);
+            color: var(--text-primary);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .advanced-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+        
+        .advanced-filters select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: rgba(57, 62, 70, 0.5);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .community-recipe-card {
+            background-color: var(--bg-light);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-fast);
+            border: 1px solid var(--border-color);
+        }
+        
+        .community-recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary-color);
+        }
+        
+        .recipe-image {
+            height: 200px;
+            position: relative;
+        }
+        
+        .recipe-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .recipe-author {
+            position: absolute;
+            bottom: var(--spacing-md);
+            left: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-full);
+            backdrop-filter: blur(4px);
+        }
+        
+        .author-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--text-white);
+        }
+        
+        .author-name {
+            font-size: var(--font-size-sm);
+            color: var(--text-white);
+            font-weight: 500;
+        }
+        
+        .recipe-content {
+            padding: var(--spacing-lg);
+        }
+        
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .recipe-category {
+            font-size: var(--font-size-sm);
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .recipe-stats {
+            display: flex;
+            gap: var(--spacing-md);
+            color: var(--text-light);
+            font-size: var(--font-size-sm);
+        }
+        
+        .recipe-title {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .recipe-description {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.5;
+            font-size: var(--font-size-sm);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .recipe-rating {
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .stars {
+            color: var(--secondary-color);
+        }
+        
+        .rating-count {
+            color: var(--text-light);
+            font-size: var(--font-size-sm);
+        }
+        
+        .recipe-tags {
+            display: none;
+        }
+        
+        .recipe-tag {
+            display: none;
+        }
+        
+        .recipe-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: var(--font-size-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn:hover {
+            color: var(--secondary-color);
+            background-color: rgba(255, 159, 28, 0.1);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            background-color: var(--bg-light);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .pagination-btn.active {
+            background-color: var(--secondary-color);
+            color: var(--text-white);
+            border-color: var(--secondary-color);
+        }
+        
+        .pagination-btn:hover:not(.active) {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .pagination-btn.next {
+            width: auto;
+            padding: 0 var(--spacing-md);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="img/logo-dark.svg" alt="CulinaryMuse Logo" width="40" height="40">
+                <h2>CulinaryMuse</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+                <li><a href="liked-recipes.html"><i class="fas fa-heart"></i> Liked Recipes</a></li>
+                <li class="active"><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <img src="img/pexels-italo-melo-881954-2379004.jpg" alt="User">
+                </div>
+                <div class="dropdown">
+                    <a href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a>
+                    <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <div class="main-content-full">
+            <div class="community-header">
+                <div class="community-title">
+                    <h1>Community Recipes</h1>
+                    <p>Discover recipes shared by our amazing community of home cooks</p>
+                </div>
+                <div class="community-actions">
+                    <button class="btn-primary"><i class="fas fa-plus"></i> Share Your Recipe</button>
+                </div>
+            </div>
+            
+            <div class="community-filter-bar">
+                <div class="filter-tabs">
+                    <button class="filter-tab active">All Recipes</button>
+                    <button class="filter-tab">Popular</button>
+                    <button class="filter-tab">Recent</button>
+                    <button class="filter-tab">From People You Follow</button>
+                </div>
+                <div class="search-wrapper">
+                    <input type="text" placeholder="Search community recipes..." class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div class="advanced-filters">
+                    <select id="filterCategory">
+                        <option value="">All Categories</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                        <option value="dessert">Dessert</option>
+                        <option value="snack">Snack</option>
+                    </select>
+                    <select id="filterDiet">
+                        <option value="">All Diets</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="gluten-free">Gluten-Free</option>
+                        <option value="keto">Keto</option>
+                    </select>
+                    <select id="filterTime">
+                        <option value="">Any Cook Time</option>
+                        <option value="15">Under 15 minutes</option>
+                        <option value="30">Under 30 minutes</option>
+                        <option value="60">Under 1 hour</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="community-grid">
+                <!-- Community Recipe 1 -->
+                <div class="community-recipe-card">
+                    <div class="recipe-image">
+                        <img src="img/This-Bangin-Korean-Beef-Bulgogi-Recipe-Is-Fire-Cooks-in-10-22298-aca3f940f7-1684420161.jpg" alt="Korean Bulgogi">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <div class="recipe-category">Dinner</div>
+                            <div class="recipe-stats">
+                                <span><i class="far fa-clock"></i> 45 mins</span>
+                                <span><i class="far fa-heart"></i> 124</span>
+                            </div>
+                        </div>
+                        <h3 class="recipe-title">Korean Bulgogi (Fire Meat)</h3>
+                        <p class="recipe-description">Authentic Korean beef bulgogi recipe that's been handed down from my grandmother. Sweet, savory and incredibly tender.</p>
+                        <div class="recipe-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(32 ratings)</span>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="community-recipe.html?id=1" class="btn-secondary">View Recipe</a>
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Recipe 2 -->
+                <div class="community-recipe-card">
+                    <div class="recipe-image">
+                        <img src="img/vegetarian-lasagna-scaled.jpg" alt="Vegetarian Lasagna">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <div class="recipe-category">Dinner</div>
+                            <div class="recipe-stats">
+                                <span><i class="far fa-clock"></i> 1h 20m</span>
+                                <span><i class="far fa-heart"></i> 98</span>
+                            </div>
+                        </div>
+                        <h3 class="recipe-title">Roasted Vegetable Lasagna</h3>
+                        <p class="recipe-description">The perfect vegetarian lasagna packed with roasted vegetables, creamy ricotta, and a homemade tomato sauce.</p>
+                        <div class="recipe-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(19 ratings)</span>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="community-recipe.html?id=2" class="btn-secondary">View Recipe</a>
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- New Recipe: Classic Tiramisu -->
+                <div class="community-recipe-card">
+                    <div class="recipe-image">
+                        <img src="img/THUMB-VIDEO-2_rev1-56.avif" alt="Classic Tiramisu">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <div class="recipe-category">Dessert</div>
+                            <div class="recipe-stats">
+                                <span><i class="far fa-clock"></i> 40 mins</span>
+                                <span><i class="far fa-heart"></i> 187</span>
+                            </div>
+                        </div>
+                        <h3 class="recipe-title">Classic Tiramisu</h3>
+                        <p class="recipe-description">This authentic Italian tiramisu features layers of coffee-soaked ladyfingers and a rich mascarpone cream for a delicious no-bake dessert.</p>
+                        <div class="recipe-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(45 ratings)</span>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="community-recipe.html?id=5" class="btn-secondary">View Recipe</a>
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- New Recipe: Butter Chicken Curry -->
+                <div class="community-recipe-card">
+                    <div class="recipe-image">
+                        <img src="img/Butter-Chicken-square-FS-34.jpg" alt="Butter Chicken Curry">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <div class="recipe-category">Dinner</div>
+                            <div class="recipe-stats">
+                                <span><i class="far fa-clock"></i> 50 mins</span>
+                                <span><i class="far fa-heart"></i> 142</span>
+                            </div>
+                        </div>
+                        <h3 class="recipe-title">Butter Chicken Curry</h3>
+                        <p class="recipe-description">Tender chicken in a rich, creamy tomato sauce with aromatic Indian spices. This restaurant-quality butter chicken is easier than you think!</p>
+                        <div class="recipe-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(38 ratings)</span>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="community-recipe.html?id=6" class="btn-secondary">View Recipe</a>
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- New Recipe: Spaghetti Aglio e Olio -->
+                <div class="community-recipe-card">
+                    <div class="recipe-image">
+                        <img src="img/Simply-Recipes-Spaghetti-Aglio-e-Olio-LEAD-2-c8e7e8c6edb04a8691463c6ea8cd4ba1.jpg" alt="Spaghetti Aglio e Olio">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <div class="recipe-category">Dinner</div>
+                            <div class="recipe-stats">
+                                <span><i class="far fa-clock"></i> 20 mins</span>
+                                <span><i class="far fa-heart"></i> 116</span>
+                            </div>
+                        </div>
+                        <h3 class="recipe-title">Spaghetti Aglio e Olio</h3>
+                        <p class="recipe-description">A classic Italian pasta dish with just 5 ingredients - spaghetti, garlic, olive oil, chili flakes, and parsley. Simple yet incredibly flavorful.</p>
+                        <div class="recipe-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(29 ratings)</span>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="community-recipe.html?id=7" class="btn-secondary">View Recipe</a>
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Recipe 3 -->
+                <div class="community-recipe-card">
+                    <div class="recipe-image">
+                        <img src="img/img_20200126_140501_509513493864637463290-e1580945666172.webp" alt="Berry Smoothie Bowl">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <div class="recipe-category">Breakfast</div>
+                            <div class="recipe-stats">
+                                <span><i class="far fa-clock"></i> 10 mins</span>
+                                <span><i class="far fa-heart"></i> 156</span>
+                            </div>
+                        </div>
+                        <h3 class="recipe-title">Mixed Berry Smoothie Bowl</h3>
+                        <p class="recipe-description">A nutritious and beautiful breakfast bowl packed with antioxidants, protein, and natural sweetness.</p>
+                        <div class="recipe-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(43 ratings)</span>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="community-recipe.html?id=3" class="btn-secondary">View Recipe</a>
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Recipe 4 -->
+                <div class="community-recipe-card">
+                    <div class="recipe-image">
+                        <img src="img/chocolate-cookies-triple.jpg" alt="Chocolate Cookies">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-meta">
+                            <div class="recipe-category">Dessert</div>
+                            <div class="recipe-stats">
+                                <span><i class="far fa-clock"></i> 35 mins</span>
+                                <span><i class="far fa-heart"></i> 201</span>
+                            </div>
+                        </div>
+                        <h3 class="recipe-title">Triple Chocolate Chunk Cookies</h3>
+                        <p class="recipe-description">Soft and chewy cookies with three types of chocolate for the ultimate indulgence. Perfect with a glass of milk!</p>
+                        <div class="recipe-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(57 ratings)</span>
+                        </div>
+                        <div class="recipe-actions">
+                            <a href="community-recipe.html?id=4" class="btn-secondary">View Recipe</a>
+                            <button class="action-btn"><i class="far fa-heart"></i></button>
+                            <button class="action-btn"><i class="far fa-comment"></i></button>
+                            <button class="action-btn"><i class="fas fa-share-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">4</button>
+                <button class="pagination-btn">...</button>
+                <button class="pagination-btn">12</button>
+                <button class="pagination-btn next">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+</body>
+</html> 

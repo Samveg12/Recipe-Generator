@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korean Bulgogi - CulinaryMuse Community</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+        }
+        
+        .recipe-detail-container {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .breadcrumb a {
+            color: var(--accent-color);
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--accent-light);
+            text-decoration: underline;
+        }
+        
+        .breadcrumb .separator {
+            color: var(--text-light);
+        }
+        
+        .breadcrumb .current {
+            color: var(--text-white);
+        }
+        
+        .community-recipe-header {
+            margin-bottom: 2rem;
+        }
+        
+        .recipe-title-section h1 {
+            color: var(--text-white);
+            margin-bottom: 1rem;
+        }
+        
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+        }
+        
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-details {
+            flex: 1;
+        }
+        
+        .author-name {
+            color: var(--text-white);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .recipe-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .follow-btn {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            color: var(--text-white);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .follow-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .recipe-tag {
+            display: none;
+        }
+        
+        .recipe-meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+        }
+        
+        .recipe-meta-info span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .recipe-meta-info i {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+        
+        .recipe-rating-large {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .stars {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+        
+        .rating-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-white);
+            margin-right: 0.5rem;
+        }
+        
+        .rating-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .recipe-actions-bar {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            margin-top: 2.5rem;
+        }
+        
+        .action-btn-large {
+            background-color: var(--bg-light);
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .action-btn-large:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .action-btn-large.active {
+            background-color: var(--secondary-color);
+        }
+        
+        .recipe-image-large {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+        }
+        
+        .recipe-image-large img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        .recipe-description-full {
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .recipe-sections {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .ingredients-section, .instructions-section {
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .ingredients-section h2, .instructions-section h2, 
+        .community-comments h2 {
+            color: var(--text-white);
+            position: relative;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .servings-control {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .ingredient-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid var(--accent-color);
+            display: none;
+        }
+        
+        .ingredients-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .servings-btn {
+            background-color: var(--accent-color);
+            color: var(--text-white);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .servings-btn:hover {
+            background-color: var(--accent-light);
+            transform: scale(1.1);
+        }
+        
+        .ingredient-amount {
+            background-color: var(--accent-color);
+            color: var(--text-white);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .ingredient-name {
+            color: var(--text-white);
+        }
+        
+        .instructions-list {
+            padding-left: 0;
+            list-style: none;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 1.5rem;
+        }
+        
+        .instruction-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background-color: var(--bg-dark);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .step-number {
+            background-color: var(--accent-color);
+            color: var(--text-white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            flex: 1;
+        }
+        
+        .step-text p {
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        
+        .community-comments {
+            margin-top: 3rem;
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .comment-form {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .rating-input {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .rating-stars {
+            display: flex;
+            margin-left: 1rem;
+            color: var(--text-light);
+        }
+        
+        .rating-stars i {
+            margin-right: 0.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .rating-stars i:hover {
+            color: var(--secondary-color);
+        }
+        
+        .comment-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            color: var(--text-white);
+            margin-bottom: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .comment-form textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .comment-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .comment-user {
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        
+        .comment-rating {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        .comment-date {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .comment-text {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .comment-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .comment-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .comment-action-btn:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .recipe-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .comment-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+        
+        .recipe-tags {
+            display: none;
+        }
+        
+        .recipe-meta-tags {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="img/logo-dark.svg" alt="CulinaryMuse" height="40">
+            </div>
+            <ul class="nav-links">
+                <li><a href="chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+                <li><a href="liked-recipes.html"><i class="fas fa-heart"></i> Liked Recipes</a></li>
+                <li class="active"><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+                <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <img src="img/pexels-italo-melo-881954-2379004.jpg" alt="User">
+                </div>
+                <div class="dropdown">
+                    <a href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a>
+                    <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <div class="main-content-full">
+            <div class="recipe-detail-container">
+                <div class="breadcrumb">
+                    <a href="community.html">Community Recipes</a> <span class="separator">/</span> 
+                    <span class="current">Korean Bulgogi</span>
+                </div>
+                
+                <div class="community-recipe-header">
+                    <div class="recipe-title-section">
+                        <h1>Korean Bulgogi (Fire Meat)</h1>
+                        <div class="recipe-meta-info">
+                            <span><i class="far fa-clock"></i> 45 mins</span>
+                            <span><i class="fas fa-utensils"></i> 4 servings</span>
+                            <span><i class="fas fa-signal"></i> Medium</span>
+                        </div>
+                        <div class="recipe-rating-large">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-value">4.5</span>
+                            <span class="rating-count">(32 ratings)</span>
+                        </div>
+                    </div>
+                    <div class="recipe-actions-bar">
+                        <button class="action-btn-large"><i class="far fa-heart"></i> Save</button>
+                        <button class="action-btn-large"><i class="fas fa-print"></i> Print</button>
+                        <button class="action-btn-large"><i class="fas fa-share-alt"></i> Share</button>
+                    </div>
+                </div>
+                
+                <div class="recipe-content">
+                    <div class="recipe-image-large">
+                        <img src="img/This-Bangin-Korean-Beef-Bulgogi-Recipe-Is-Fire-Cooks-in-10-22298-aca3f940f7-1684420161.jpg" alt="Korean Bulgogi">
+                    </div>
+                    
+                    <div class="recipe-description-full">
+                        <p>This authentic Korean beef bulgogi recipe has been handed down from my grandmother. The marinade creates incredibly tender beef with a perfect balance of sweet and savory flavors. Serve with steamed rice and banchan (Korean side dishes) for a complete meal.</p>
+                    </div>
+                    
+                    <div class="recipe-sections">
+                        <div class="ingredients-section">
+                            <h2>Ingredients</h2>
+                            <div class="servings-control">
+                                <span>Servings:</span>
+                                <button class="servings-btn" id="decreaseServings">-</button>
+                                <span id="servingsCount">4</span>
+                                <button class="servings-btn" id="increaseServings">+</button>
+                            </div>
+                            
+                            <ul class="ingredients-list">
+                                <li>
+                                    <img src="img/Carbonara.jpg" alt="Ribeye" class="ingredient-image">
+                                    <span class="ingredient-amount">1.5 lbs</span>
+                                    <span class="ingredient-name">thinly sliced beef (ribeye or sirloin)</span>
+                                </li>
+                                <li>
+                                    <img src="img/Cacio e Pepe.jpg" alt="Pear" class="ingredient-image">
+                                    <span class="ingredient-amount">1/2</span>
+                                    <span class="ingredient-name">pear, peeled and grated</span>
+                                </li>
+                                <li>
+                                    <img src="img/Pesto Pasta.jpg" alt="Soy Sauce" class="ingredient-image">
+                                    <span class="ingredient-amount">1/4 cup</span>
+                                    <span class="ingredient-name">soy sauce</span>
+                                </li>
+                                <li>
+                                    <span class="ingredient-amount">2 tbsp</span>
+                                    <span class="ingredient-name">brown sugar</span>
+                                </li>
+                                <li>
+                                    <span class="ingredient-amount">2 tbsp</span>
+                                    <span class="ingredient-name">sesame oil</span>
+                                </li>
+                                <li>
+                                    <span class="ingredient-amount">4 cloves</span>
+                                    <span class="ingredient-name">garlic, minced</span>
+                                </li>
+                                <li>
+                                    <span class="ingredient-amount">1 tbsp</span>
+                                    <span class="ingredient-name">ginger, minced</span>
+                                </li>
+                                <li>
+                                    <span class="ingredient-amount">2 tbsp</span>
+                                    <span class="ingredient-name">green onions, chopped</span>
+                                </li>
+                                <li>
+                                    <span class="ingredient-amount">1 tbsp</span>
+                                    <span class="ingredient-name">sesame seeds, plus more for garnish</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instructions-section">
+                            <h2>Instructions</h2>
+                            <ol class="instructions-list">
+                                <li>
+                                    <div class="instruction-step">
+                                        <div class="step-number">1</div>
+                                        <div class="step-text">
+                                            <p>In a large bowl, combine the pear, soy sauce, brown sugar, sesame oil, garlic, ginger, green onions, and sesame seeds to make the marinade.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="instruction-step">
+                                        <div class="step-number">2</div>
+                                        <div class="step-text">
+                                            <p>Add the thinly sliced beef to the marinade and mix well to ensure all the meat is coated. Cover and refrigerate for at least 1 hour, or overnight for best results.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="instruction-step">
+                                        <div class="step-number">3</div>
+                                        <div class="step-text">
+                                            <p>Heat a large skillet or grill pan over high heat. Working in batches, cook the marinated beef for 2-3 minutes until browned and slightly caramelized.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="instruction-step">
+                                        <div class="step-number">4</div>
+                                        <div class="step-text">
+                                            <p>Garnish with additional sesame seeds and sliced green onions. Serve immediately with steamed rice.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="community-comments">
+                    <h2>Comments & Reviews</h2>
+                    <div class="comment-form">
+                        <div class="rating-input">
+                            <span>Your Rating:</span>
+                            <div class="rating-stars">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                        </div>
+                        <textarea placeholder="Share your experience with this recipe..."></textarea>
+                        <button class="btn-primary">Submit Review</button>
+                    </div>
+                    
+                    <div class="comments-list">
+                        <div class="comment-item">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <div class="comment-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="comment-date">April 18, 2023</div>
+                                <div class="comment-text">
+                                    <p>Amazing recipe! I made this for my family and everyone loved it. The marinade really makes the beef so tender and flavorful. Will definitely be making this again!</p>
+                                </div>
+                                <div class="comment-actions">
+                                    <button class="comment-action-btn"><i class="far fa-thumbs-up"></i> 12</button>
+                                    <button class="comment-action-btn"><i class="far fa-comment"></i> Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-item">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <div class="comment-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="comment-date">March 30, 2023</div>
+                                <div class="comment-text">
+                                    <p>Great authentic flavor! I added a bit more ginger and some gochujang for extra spice. One tip: freeze the beef for 30 minutes before slicing to get really thin slices.</p>
+                                </div>
+                                <div class="comment-actions">
+                                    <button class="comment-action-btn"><i class="far fa-thumbs-up"></i> 8</button>
+                                    <button class="comment-action-btn"><i class="far fa-comment"></i> Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+</body>
+</html> 
