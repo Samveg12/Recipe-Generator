@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a6fa5" />
+      <stop offset="100%" stop-color="#34517e" />
+    </linearGradient>
+    <linearGradient id="text-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f47c3c" />
+      <stop offset="100%" stop-color="#d65f1c" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="75" cy="75" r="70" fill="white" stroke="url(#bg-gradient)" stroke-width="5" />
+  
+  <!-- Chef hat -->
+  <path d="M75,30 c-10,0 -18,8 -18,18 c0,5 2,9.5 5,13 c-3,2 -5,5.5 -5,9.5 v3.5 c0,2 1.5,3.5 3.5,3.5 h29 c2,0 3.5-1.5 3.5-3.5 v-3.5 c0-4 -2-7.5 -5-9.5 c3-3.5 5-8 5-13 c0-10 -8-18 -18-18 z" 
+    fill="url(#bg-gradient)" />
+  
+  <!-- Spoon -->
+  <path d="M50,75 c0,0 -5,10 -5,15 c0,5 4,9 9,9 c5,0 9,-4 9,-9 c0,-5 -5,-15 -5,-15 z" 
+    fill="url(#text-gradient)" stroke="white" stroke-width="1" />
+  
+  <!-- Fork -->
+  <path d="M95,75 l0,24 M90,75 l0,15 M100,75 l0,15" 
+    stroke="url(#text-gradient)" stroke-width="3" stroke-linecap="round" />
+  <path d="M95,99 c0,0 -7,0 -7,7 c0,4 3,7 7,7 c4,0 7,-3 7,-7 c0,-7 -7,-7 -7,-7 z" 
+    fill="url(#text-gradient)" />
+  
+  <!-- Text Banner -->
+  <rect x="30" y="115" width="90" height="22" rx="6" fill="url(#bg-gradient)" />
+  
+  <!-- Text -->
+  <text x="75" y="131" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">CULINARY MUSE</text>
+</svg> 
