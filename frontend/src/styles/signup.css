@@ -1,0 +1,484 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: #343541;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(135deg, #343541 0%, #202123 100%);
+}
+
+.signup-form {
+    background: #444654;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    border: 1px solid #565869;
+}
+
+.signup-form h2 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #9ca3af;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #565869;
+    border-radius: 0.5rem;
+    background: #40414f;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #ff6b00;
+    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #8e8ea0;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #565869;
+    border-radius: 0.5rem;
+    background: #40414f;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    cursor: pointer;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #ff6b00;
+    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+}
+
+.form-group select:hover {
+    border-color: #ff6b00;
+}
+
+.form-group select option {
+    background: #40414f;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+.form-group select option:checked {
+    background: #ff6b00;
+    color: #ffffff;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    background: #ff6b00;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #e05e00;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-primary:disabled {
+    background: #565869;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.error-message {
+    background: rgba(255, 59, 48, 0.1);
+    color: #ff3b30;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    border: 1px solid rgba(255, 59, 48, 0.2);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+.login-link a {
+    color: #ff6b00;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.login-link a:hover {
+    color: #e05e00;
+    text-decoration: underline;
+}
+
+/* Loading animation */
+.loading {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 0.8s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Toggle Button Styles */
+.toggle-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.toggle-option {
+    position: relative;
+    display: inline-block;
+}
+
+.toggle-option input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-option label {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background: #40414f;
+    color: #9ca3af;
+    border: 1px solid #565869;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.toggle-option label:hover {
+    background: #4a4b57;
+    border-color: #ff6b00;
+}
+
+.toggle-option input[type="checkbox"]:checked + label {
+    background: rgba(255, 107, 0, 0.1);
+    color: #ff6b00;
+    border-color: #ff6b00;
+}
+
+.toggle-option label::before {
+    content: '';
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    background: #565869;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.toggle-option input[type="checkbox"]:checked + label::before {
+    background: #ff6b00;
+    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
+}
+
+/* Preference Section Styles */
+.preference-section {
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preference-section h3 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.preference-description {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Dietary Restrictions Section */
+.dietary-restrictions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.dietary-option {
+    position: relative;
+}
+
+.dietary-option input[type="checkbox"] {
+    display: none;
+}
+
+.dietary-option label {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: #40414f;
+    color: #9ca3af;
+    border: 1px solid #565869;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.dietary-option label:hover {
+    background: #4a4b57;
+    border-color: #ff6b00;
+}
+
+.dietary-option input[type="checkbox"]:checked + label {
+    background: rgba(255, 107, 0, 0.1);
+    color: #ff6b00;
+    border-color: #ff6b00;
+}
+
+/* Cooking Skill Level */
+.skill-level {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.skill-option {
+    flex: 1;
+    position: relative;
+}
+
+.skill-option input[type="radio"] {
+    display: none;
+}
+
+.skill-option label {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    background: #40414f;
+    color: #9ca3af;
+    border: 1px solid #565869;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.skill-option label:hover {
+    background: #4a4b57;
+    border-color: #ff6b00;
+}
+
+.skill-option input[type="radio"]:checked + label {
+    background: rgba(255, 107, 0, 0.1);
+    color: #ff6b00;
+    border-color: #ff6b00;
+    font-weight: 500;
+}
+
+/* Cuisine Preferences */
+.cuisine-preferences {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.cuisine-option {
+    position: relative;
+}
+
+.cuisine-option input[type="checkbox"] {
+    display: none;
+}
+
+.cuisine-option label {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: #40414f;
+    color: #9ca3af;
+    border: 1px solid #565869;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.cuisine-option label:hover {
+    background: #4a4b57;
+    border-color: #ff6b00;
+}
+
+.cuisine-option input[type="checkbox"]:checked + label {
+    background: rgba(255, 107, 0, 0.1);
+    color: #ff6b00;
+    border-color: #ff6b00;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .signup-container {
+        padding: 1rem;
+    }
+
+    .signup-form {
+        padding: 1.5rem;
+    }
+
+    .signup-form h2 {
+        font-size: 1.5rem;
+    }
+
+    .toggle-container,
+    .dietary-restrictions,
+    .cuisine-preferences {
+        gap: 0.5rem;
+    }
+
+    .toggle-option label,
+    .dietary-option label,
+    .cuisine-option label {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .skill-level {
+        flex-direction: column;
+    }
+
+    .preference-section {
+        padding: 1rem;
+    }
+}
+
+.dietary-restrictions,
+.cuisine-preferences,
+.toggle-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.dietary-option,
+.cuisine-option,
+.toggle-option {
+    position: relative;
+}
+
+.dietary-option input,
+.cuisine-option input,
+.toggle-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.dietary-option label,
+.cuisine-option label,
+.toggle-option label {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.dietary-option input:checked + label,
+.cuisine-option input:checked + label,
+.toggle-option input:checked + label {
+    background: #ff6b00;
+    border-color: #ff6b00;
+    color: #fff;
+}
+
+.dietary-option label:hover,
+.cuisine-option label:hover,
+.toggle-option label:hover {
+    background: rgba(255, 107, 0, 0.1);
+    border-color: #ff6b00;
+}
+
+@media (max-width: 768px) {
+    .dietary-restrictions,
+    .cuisine-preferences,
+    .toggle-container {
+        grid-template-columns: 1fr;
+    }
+}
