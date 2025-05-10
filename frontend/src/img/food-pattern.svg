@@ -1,0 +1,81 @@
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Pattern definition -->
+    <pattern id="foodPattern" patternUnits="userSpaceOnUse" width="200" height="200" patternTransform="rotate(10)">
+      <!-- Background -->
+      <rect width="200" height="200" fill="#222831" />
+      
+      <!-- Food Icons - Enhanced -->
+      <!-- Fork -->
+      <path d="M80,30 L90,20 L100,30 L95,35 L92,50 L88,50 L85,35 Z" fill="#FF9F1C" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.5;0.4" dur="5s" repeatCount="indefinite" />
+      </path>
+      
+      <!-- Knife -->
+      <path d="M110,20 L140,50 L115,75 L105,65 L120,50 L100,30 Z" fill="#FFFFFF" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.5;0.4" dur="4s" repeatCount="indefinite" />
+      </path>
+      
+      <!-- Plate -->
+      <circle cx="50" cy="150" r="25" fill="none" stroke="#00ADB5" stroke-width="2" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.5;0.4" dur="6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="50" cy="150" r="20" fill="none" stroke="#00ADB5" stroke-width="1" opacity="0.3" />
+      
+      <!-- Chef Hat -->
+      <path d="M160,140 Q180,120 160,100 Q140,80 160,60 L130,60 Q110,80 130,100 Q150,120 130,140 Z" fill="#FFFFFF" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.5;0.4" dur="7s" repeatCount="indefinite" />
+      </path>
+      
+      <!-- Spoon -->
+      <path d="M120,130 Q140,110 120,90 L110,100 Q120,110 110,120 Z" fill="#FFFFFF" opacity="0.4" />
+      <rect x="108" y="118" width="4" height="20" transform="rotate(-45 110 120)" fill="#FFFFFF" opacity="0.4" />
+      
+      <!-- Pan -->
+      <circle cx="30" cy="50" r="15" fill="none" stroke="#E76F51" stroke-width="2" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.5;0.4" dur="5s" repeatCount="indefinite" />
+      </circle>
+      <rect x="40" y="45" width="20" height="10" fill="#E76F51" opacity="0.4" />
+      
+      <!-- Cutting Board -->
+      <rect x="140" y="150" width="40" height="30" rx="2" fill="#A27B5C" opacity="0.4" />
+      <rect x="145" y="155" width="30" height="20" rx="1" fill="none" stroke="#A27B5C" stroke-width="1" opacity="0.3" />
+      
+      <!-- Whisk -->
+      <path d="M30,90 L40,80 L35,75 Q25,65 35,55 Q45,45 35,35 L30,40 Q40,50 30,60 Q20,70 30,80 Z" fill="#FFFFFF" opacity="0.4" />
+      
+      <!-- Additional Food Elements -->
+      <!-- Pizza Slice -->
+      <path d="M160,30 L180,40 L170,60 Z" fill="#FFD700" opacity="0.4" />
+      <circle cx="170" cy="43" r="2" fill="#E74C3C" opacity="0.5" />
+      <circle cx="173" cy="47" r="2" fill="#E74C3C" opacity="0.5" />
+      
+      <!-- Cupcake -->
+      <path d="M40,170 L50,150 L60,170 Z" fill="#FF9F1C" opacity="0.4" />
+      <path d="M42,150 Q50,140 58,150" stroke="#E76F51" stroke-width="2" fill="none" opacity="0.4" />
+      <circle cx="50" cy="145" r="3" fill="#E74C3C" opacity="0.5" />
+      
+      <!-- Wine Glass -->
+      <path d="M100,180 L105,160 Q115,150 105,140 Q95,150 105,160 L110,180 Z" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.4" />
+      
+      <!-- Vegetable -->
+      <path d="M10,120 Q20,110 30,120 Q40,130 30,140 Q20,150 10,140 Q0,130 10,120 Z" fill="#2EC4B6" opacity="0.4" />
+      
+      <!-- Chopsticks -->
+      <line x1="70" y1="70" x2="90" y2="90" stroke="#A27B5C" stroke-width="2" opacity="0.4" />
+      <line x1="75" y1="65" x2="95" y2="85" stroke="#A27B5C" stroke-width="2" opacity="0.4" />
+    </pattern>
+    
+    <!-- Overlay Gradient -->
+    <linearGradient id="overlay" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#222831" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#222831" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Apply the pattern to a rectangle that fills the SVG -->
+  <rect width="100%" height="100%" fill="url(#foodPattern)" />
+  
+  <!-- Add overlay gradient for depth -->
+  <rect width="100%" height="100%" fill="url(#overlay)" />
+</svg> 
