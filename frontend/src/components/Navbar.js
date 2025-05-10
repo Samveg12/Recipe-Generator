@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/navbar.css';
+import logoDark from '../img/logo-dark.svg';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +20,7 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <Link to="/" className="navbar-brand">
-                <img src="/img/logo-dark.svg" alt="CulinaryMuse Logo" className="navbar-logo" />
+                <img src={logoDark} alt="CulinaryMuse Logo" className="navbar-logo" />
                 <h1 className="navbar-title">CulinaryMuse</h1>
             </Link>
 
@@ -40,11 +41,17 @@ const Navbar = () => {
                 >
                     Chat
                 </Link>
+                <Link 
+                    to="/community" 
+                    className={`nav-link ${location.pathname === '/community' ? 'active' : ''}`}
+                >
+                    Community
+                </Link>
                 {isAuthenticated ? (
                     <>
                         <Link 
-                            to="/saved-recipes" 
-                            className={`nav-link ${location.pathname === '/saved-recipes' ? 'active' : ''}`}
+                            to="/saved" 
+                            className={`nav-link ${location.pathname === '/saved' ? 'active' : ''}`}
                         >
                             Saved Recipes
                         </Link>

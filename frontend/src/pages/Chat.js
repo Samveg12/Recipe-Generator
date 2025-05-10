@@ -8,6 +8,10 @@ export default function Chat() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
+  const [saveModal, setSaveModal] = useState(false);
+  const [recipeData, setRecipeData] = useState({ title: '', ingredients: [], instructions: '' });
+  const [savingRecipe, setSavingRecipe] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
 
@@ -71,6 +75,120 @@ export default function Chat() {
     setInput('');
   };
 
+  const parseRecipe = (responseText) => {
+    // A basic recipe parser - this is a simplified version
+    // In a production app, consider using NLP or regex patterns for more precise extraction
+    
+    // Look for title patterns
+    let title = '';
+    const titleMatch = responseText.match(/(?:Recipe|#)\s*:\s*(.*?)(?:\n|$)/i) ||
+                     responseText.match(/(?:^|\n)([^#\n][^\n]+?)(?:\n|$)/);
+    if (titleMatch) {
+      title = titleMatch[1].trim();
+    }
+    
+    // Extract ingredients
+    let ingredients = [];
+    const ingredientsSection = responseText.match(/(?:Ingredients:|Ingredients)(?:\s*:\s*)?(?:\n?)([\s\S]*?)(?:\n\s*(?:Instructions|Directions|Method|Steps|Preparation)|$)/i);
+    
+    if (ingredientsSection) {
+      const ingredientText = ingredientsSection[1];
+      // Extract ingredients as list items
+      ingredients = ingredientText.split('\n')
+                              .filter(line => line.trim().length > 0)
+                              .map(line => line.replace(/^[*\-•]|\d+\.\s+/g, '').trim());
+    }
+    
+    // Extract instructions
+    let instructions = '';
+    const instructionsSection = responseText.match(/(?:Instructions|Directions|Method|Steps|Preparation)(?:\s*:\s*)?(?:\n?)([\s\S]*?)(?:\n\s*(?:Notes|Tips|Enjoy|$))/i);
+    
+    if (instructionsSection) {
+      instructions = instructionsSection[1].trim();
+    } else {
+      // If no explicit instructions section, take the remainder after ingredients
+      const remainderAfterIngredients = responseText.split(/Ingredients(?:\s*:\s*)?/i)[1];
+      if (remainderAfterIngredients) {
+        const remainingParts = remainderAfterIngredients.split('\n\n');
+        if (remainingParts.length > 1) {
+          instructions = remainingParts.slice(1).join('\n\n').trim();
+        }
+      }
+    }
+    
+    return {
+      title: title || 'Untitled Recipe',
+      ingredients: ingredients.length > 0 ? ingredients : ['Ingredients not found'],
+      instructions: instructions || 'Instructions not found'
+    };
+  };
+
+  const openSaveModal = () => {
+    if (!selectedEntry) return;
+    
+    const parsedRecipe = parseRecipe(selectedEntry.response);
+    setRecipeData(parsedRecipe);
+    setSaveModal(true);
+    setSaveSuccess(false);
+  };
+
+  const handleSaveRecipe = async (e) => {
+    e.preventDefault();
+    
+    if (!recipeData.title || recipeData.ingredients.length === 0) {
+      alert('Please provide a title and at least one ingredient');
+      return;
+    }
+    
+    setSavingRecipe(true);
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:8000/api/save-recipe/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        },
+        body: JSON.stringify(recipeData)
+      });
+      
+      if (response.ok) {
+        setSaveSuccess(true);
+        setTimeout(() => {
+          setSaveModal(false);
+          setSaveSuccess(false);
+        }, 2000);
+      } else {
+        alert('Failed to save recipe. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error saving recipe:', error);
+      alert('An error occurred while saving the recipe');
+    } finally {
+      setSavingRecipe(false);
+    }
+  };
+
+  const handleIngredientChange = (index, value) => {
+    const updatedIngredients = [...recipeData.ingredients];
+    updatedIngredients[index] = value;
+    setRecipeData({...recipeData, ingredients: updatedIngredients});
+  };
+
+  const addIngredient = () => {
+    setRecipeData({
+      ...recipeData, 
+      ingredients: [...recipeData.ingredients, '']
+    });
+  };
+
+  const removeIngredient = (index) => {
+    const updatedIngredients = [...recipeData.ingredients];
+    updatedIngredients.splice(index, 1);
+    setRecipeData({...recipeData, ingredients: updatedIngredients});
+  };
+
   return (
     <div className="main-content">
       {/* Sidebar */}
@@ -103,6 +221,11 @@ export default function Chat() {
             <h3>🍳 CulinaryMuse Assistant</h3>
             <p className="chat-subtitle">Helping you cook smarter</p>
           </div>
+          {selectedEntry && (
+            <button className="save-recipe-btn" onClick={openSaveModal}>
+              Save Recipe
+            </button>
+          )}
         </div>
 
         <div className="chat-messages">
@@ -156,6 +279,88 @@ export default function Chat() {
           </form>
         </div>
       </div>
+
+      {/* Save Recipe Modal */}
+      {saveModal && (
+        <div className="modal-overlay">
+          <div className="modal-content save-recipe-modal">
+            <div className="modal-header">
+              <h2>Save Recipe</h2>
+              <button className="close-btn" onClick={() => setSaveModal(false)}>×</button>
+            </div>
+            {saveSuccess ? (
+              <div className="save-success">
+                <div className="success-icon">✓</div>
+                <h3>Recipe Saved!</h3>
+                <p>You can view it in your Saved Recipes.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSaveRecipe}>
+                <div className="form-group">
+                  <label htmlFor="recipeTitle">Recipe Title</label>
+                  <input
+                    type="text"
+                    id="recipeTitle"
+                    value={recipeData.title}
+                    onChange={(e) => setRecipeData({...recipeData, title: e.target.value})}
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Ingredients</label>
+                  <div className="ingredients-editor">
+                    {recipeData.ingredients.map((ingredient, idx) => (
+                      <div key={idx} className="ingredient-row">
+                        <input
+                          type="text"
+                          value={ingredient}
+                          onChange={(e) => handleIngredientChange(idx, e.target.value)}
+                          placeholder="e.g. 2 cups flour"
+                        />
+                        <button
+                          type="button"
+                          className="remove-ingredient"
+                          onClick={() => removeIngredient(idx)}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      className="add-ingredient-btn"
+                      onClick={addIngredient}
+                    >
+                      + Add Ingredient
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="recipeInstructions">Instructions</label>
+                  <textarea
+                    id="recipeInstructions"
+                    value={recipeData.instructions}
+                    onChange={(e) => setRecipeData({...recipeData, instructions: e.target.value})}
+                    rows={6}
+                    required
+                  ></textarea>
+                </div>
+                
+                <div className="modal-actions">
+                  <button type="button" className="cancel-btn" onClick={() => setSaveModal(false)}>
+                    Cancel
+                  </button>
+                  <button type="submit" className="submit-btn" disabled={savingRecipe}>
+                    {savingRecipe ? 'Saving...' : 'Save Recipe'}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

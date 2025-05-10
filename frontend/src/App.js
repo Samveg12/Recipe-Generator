@@ -7,6 +7,7 @@ import Signup from './pages/signup';
 import Chat from './pages/Chat';
 import SavedRecipes from './pages/SavedRecipes';
 import Profile from './pages/Profile';
+import Community from './pages/Community';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
            <Route path="/chat" element={<Chat />} /> 
           <Route path="/saved" element={<SavedRecipes />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/community" element={<Community />} />
         </Routes>
       </div>
     </Router>

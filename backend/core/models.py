@@ -43,3 +43,30 @@ class SavedRecipe(Document):
     meta = {
         'collection': 'saved_recipes'
     }
+
+class CommunityPost(Document):
+    user = ReferenceField(UserProfile, required=True)
+    title = StringField(required=True)
+    content = StringField(required=True)
+    recipe = ReferenceField(SavedRecipe)
+    images = ListField(StringField())
+    likes = IntField(default=0)
+    likes_users = ListField(ReferenceField(UserProfile))
+    created_at = DateTimeField(default=datetime.datetime.utcnow)
+    updated_at = DateTimeField(default=datetime.datetime.utcnow)
+
+    meta = {
+        'collection': 'community_posts',
+        'ordering': ['-created_at']
+    }
+
+class Comment(Document):
+    user = ReferenceField(UserProfile, required=True)
+    post = ReferenceField(CommunityPost, required=True)
+    content = StringField(required=True)
+    created_at = DateTimeField(default=datetime.datetime.utcnow)
+
+    meta = {
+        'collection': 'comments',
+        'ordering': ['created_at']
+    }
