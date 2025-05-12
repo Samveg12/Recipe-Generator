@@ -7,3 +7,7 @@ db.sqlite3
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Ignore Python byte-code
+__pycache__/
+*.pyc
