@@ -558,3 +558,7 @@ def update_profile(request):
 
     user.save()
     return Response({'message': 'Profile updated successfully'})
+
+@api_view(['GET'])
+def health_check(request):
+    return Response({'status': 'healthy'})

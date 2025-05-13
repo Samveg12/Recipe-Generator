@@ -4,7 +4,7 @@ from .views import (
     get_saved_recipes, toggle_favorite, get_favorites, 
     get_community_posts, create_community_post, get_post_details, 
     add_comment, toggle_post_like, delete_recipe, get_profile, 
-    update_profile
+    update_profile, health_check  # Add this import
 )
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     path('community/posts/like/', toggle_post_like, name='toggle_post_like'),
     path('user/profile/', get_profile, name='get_profile'),
     path('user/profile/update/', update_profile, name='update_profile'),
+    path('health-check/', health_check, name='health_check'),
 ]

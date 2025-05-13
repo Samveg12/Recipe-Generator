@@ -1,8 +1,8 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from .models import UserProfile, SavedRecipe, CommunityPost, Comment
+from ..models import UserProfile, SavedRecipe, CommunityPost, Comment
 import json
-from .auth import generate_token
+from ..auth import generate_token
 
 class APITestCase(TestCase):
     def setUp(self):
