@@ -1,0 +1,17 @@
+[run]
+source = core/
+omit = 
+    */tests/*
+    */migrations/*
+    */__init__.py
+    */apps.py
+    */admin.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:
+    pass
+    raise ImportError

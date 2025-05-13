@@ -2,3 +2,12 @@
 __pycache__/
 node_modules/
 db.sqlite3
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ignore Python byte-code
+__pycache__/
+*.pyc
